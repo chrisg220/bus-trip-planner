@@ -7,3 +7,14 @@ For multi-leg trips, the app will also determine if there is enough predicted tr
 By presenting this aggregated information in a visual way to the user, she can make better judgements about the routes she takes on public transit.
 
 ![Bus Trip Planner Mindmap](/mindmap.png " Bus Trip Planner Mindmap")
+
+## Roadmap
+
+✓ Create repository
+✓ Create readme
+▢ Setup 'bootstrap-sass' gem to use Twitter Bootstrap in project
+▢ **Feature:** CRUD trips to monitor (startpoint, endpoint, arrive_by/leave_by, time)
+▢ Figure out how to use Google Maps JS API to fetch possible routes to user
+▢ **Feature:** Let user store/CRUD selected routes
+▢ Figure out how to use GMaps API to fetch legs
+▢ **Feature:** store these legs to monitor
