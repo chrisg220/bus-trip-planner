@@ -1,0 +1,34 @@
+<h2>Create a new trip</h2>
+<p>First, let's find the transit routes you can take to your destination.</p>
+<%= render "form" %>
+
+<div class="content">
+  <% if @json %>
+    <% @json["routes"].each_with_index do |route, index| %>
+      <h3>Route <%= index %>:</h3>
+      <p>Start: <%= route["legs"][0]["start_address"] %></p>
+      <p>End: <%= route["legs"][-1]["end_address"] %></p>
+      <p>Steps:</p>
+      <ol>
+        <% route["legs"].each do |leg| %>
+          <% leg["steps"].each do |step| %>
+            <li>
+              <strong><%= step["travel_mode"] %></strong>
+              <%= step["html_instructions"] %>
+              <% if step["transit_details"] %>
+                <br/>
+                Get on
+                <strong><%= step["transit_details"]["line"]["short_name"] + " " + step["transit_details"]["line"]["vehicle"]["name"] %></strong> at <strong><%= step["transit_details"]["departure_stop"]["name"] %></strong>
+                and get off at <strong><%= step["transit_details"]["arrival_stop"]["name"] %></strong>
+              <% end %>
+            </li>
+          <% end %>
+        <% end %>
+      </ol>
+      <p><%= route["copyrights"] %></p>
+    <% end %>
+
+    <h4>Raw JSON</h4>
+    <%= @json %>
+  <% end %>
+</div>

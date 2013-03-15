@@ -1,0 +1,27 @@
+<%= form_for @trip, html: { class: "form-horizontal" } do |f| %>
+  <%= f.error_messages %>
+  <div class="control-group">
+    <%= f.label :name, "Name this trip", class: "control-label" %>
+    <div class="controls">
+      <%= f.text_field :name, placeholder: "Trip name" %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :origin_name, "Starting Point", class: "control-label" %>
+    <div class="controls">
+      <%= f.text_field :origin_name, placeholder: "Enter a start location" %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :destination_name, "Ending Point", class: "control-label" %>
+    <div class="controls">
+      <%= f.text_field :destination_name, placeholder: "Enter an end location" %>
+    </div>
+  </div>
+  <div class="control-group">
+    <div class="controls">
+      <%= f.submit "Submit", class: "btn" %>
+    </div>
+  </div>
+
+<% end %>

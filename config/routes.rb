@@ -1,6 +1,8 @@
 BusTripPlanner::Application.routes.draw do
   root :to => "trips#index"
 
+  resources :trips
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
