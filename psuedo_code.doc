@@ -1,0 +1,33 @@
+Index page
+    user inputs 'orgin'
+    user inputs 'destination'
+
+    if user chooses 'detailed-time-picker'
+        user inputs departure/arrival
+        user inputs time
+        user inputs date
+
+    submit form
+
+
+Trip Results Page
+    // Parse and format data from Google & OBA.
+    // filter out Google/OBA conflicts
+    // list results
+
+    user selects desired Trip
+    user navigates to Trip Details page
+
+
+Trip Details page
+    // display "add trip"/settings functionality menu
+    click 'add trip to My Trips'
+        If
+    // display 'Countdown Timer' Trip details
+    // display Trip legs
+    // refresh ~30sec
+
+User Settings
+    input user email
+
+    // display options to change password
