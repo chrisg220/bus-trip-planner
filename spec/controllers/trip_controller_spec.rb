@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe TripController do
+describe TripsController do
 
   context "visitors" do
     # visitors can create trips, but have no saved trips to edit, update, or delete
