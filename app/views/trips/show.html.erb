@@ -1,8 +1,8 @@
-<h2>Directions</h2>
 
 <a href="" class="btn">Save Trip</a>
 
 <div class="content">
+<h2>Directions to <%= @trip.name %></h2>
   <% if @json %>
     <% @json["routes"].each_with_index do |route, index| %>
       <h3>Route <%= index+1 %>:</h3>
