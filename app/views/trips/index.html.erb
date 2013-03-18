@@ -1,3 +1,10 @@
-Hello, World!
+<h1>Hello, Bus People!</h1>
 
 <%= link_to "Create new trip", new_trip_path %>
+
+<h2>All trips:</h2>
+<ul>
+  <% @trips.each do |trip| %>
+    <li><%= link_to trip.name %></li>
+  <% end %>
+</ul>
