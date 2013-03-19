@@ -1,5 +1,7 @@
 
-<a href="" class="btn">Save Trip</a>
+<a href="" class="btn btn-primary">Save Trip</a>
+<%= link_to "Edit", edit_trip_path(@trip), :class => "btn btn-info" %>
+<%= link_to "Delete", trip_path(@trip), :class => "btn btn-danger", :method => :delete, :confirm => "Are you sure you want to delete this project?" %>
 
 <div class="content">
 <h2>Directions to <%= @trip.name %></h2>
@@ -18,7 +20,8 @@
               <% if step["transit_details"] %>
                 <br/>
                 Get on
-                <strong><%= step["transit_details"]["line"]["short_name"] + " " + step["transit_details"]["line"]["vehicle"]["name"] %></strong> at <strong><%= step["transit_details"]["departure_stop"]["name"] %></strong>
+                <strong><%= step["transit_details"]["line"]["short_name"] || step["transit_details"]["line"]["name"]%>
+                <%= " " + step["transit_details"]["line"]["vehicle"]["name"] %></strong> at <strong><%= step["transit_details"]["departure_stop"]["name"] %></strong>
                 and get off at <strong><%= step["transit_details"]["arrival_stop"]["name"] %></strong>
               <% end %>
             </li>
