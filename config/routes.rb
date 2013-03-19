@@ -1,4 +1,6 @@
 BusTripPlanner::Application.routes.draw do
+  get "fake_api/json"
+
   root :to => "trips#index"
 
   resources :trips
