@@ -73,7 +73,22 @@ class TripsController < ApplicationController
   end
 
   def update
-    if @trip.update_parameters(params[:trip])
+    origin = params[:trip][:origin_name]
+    destination = params[:trip][:destination_name]
+
+    @resp = route_api_request(origin, destination)
+
+    unless @resp["status"] == "OK"
+      flash[:alert] = "Trip not stored. Problems with your request."
+      render 'edit'
+      return
+    end
+
+    @trip.origin_name = @resp["routes"][0]["legs"][0]["start_address"]
+    @trip.destination_name = @resp["routes"][0]["legs"][-1]["end_address"]
+    @trip.raw_response = @resp.to_json.to_s
+
+    if @trip.save!
       flash[:notice] = "Trip start/end updated."
       redirect_to trip_path(@trip)
     else
