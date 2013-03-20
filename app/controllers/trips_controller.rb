@@ -83,25 +83,32 @@ class TripsController < ApplicationController
     origin = params[:trip][:origin_name]
     destination = params[:trip][:destination_name]
 
-    @resp = route_api_request(origin, destination)
-
-    unless @resp["status"] == "OK"
-      flash[:alert] = "Trip not stored. Problems with your request."
-      render 'edit'
-      return
-    end
-
-    @trip.origin_name = @resp["routes"][0]["legs"][0]["start_address"]
-    @trip.destination_name = @resp["routes"][0]["legs"][-1]["end_address"]
-    @trip.raw_response = @resp.to_json.to_s
-
-    if @trip.save!
-      flash[:notice] = "Trip start/end updated."
-      redirect_to trip_path(@trip)
+    if @trip.valid?
+      @resp = route_api_request(origin, destination)
     else
-      flash[:error] = "Trip was not updated."
-      render "edit"
+      flash[:alert] = "Origin and destination can't be blank. Please try again."
     end
+
+    unless @resp.blank?
+      if @resp["status"] == "OK"
+        @trip.origin_name = @resp["routes"][0]["legs"][0]["start_address"]
+        @trip.destination_name = @resp["routes"][0]["legs"][-1]["end_address"]
+        @trip.raw_response = @resp.to_json.to_s
+
+        if @trip.save!
+          flash[:notice] = "Trip updated"
+          redirect_to trip_path(@trip)
+          return
+        else
+          flash[:alert] = "Trip not updated"
+        end
+      else
+        flash[:alert] = route_status_error(@resp["status"])
+      end
+    end
+
+    # didn't get to save for one of various reasons, send user back
+    render 'edit'
   end
 
   def destroy
