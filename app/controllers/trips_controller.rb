@@ -41,25 +41,32 @@ class TripsController < ApplicationController
     #           "&alternatives=" + alternatives.to_s +
     #           "&" + time_by + "_time=" + time
 
-    @resp = route_api_request(origin, destination)
-
-    unless @resp["status"] == "OK"
-      flash[:alert] = "Trip not stored. Problems with your request."
-      render 'new'
-      return
-    end
-
-    @trip.origin_name = @resp["routes"][0]["legs"][0]["start_address"]
-    @trip.destination_name = @resp["routes"][0]["legs"][-1]["end_address"]
-    @trip.raw_response = @resp.to_json.to_s
-
-    if @trip.save
-      flash[:notice] = "Trip stored, but not saved to user"
-      redirect_to trip_path(@trip)
+    if @trip.valid?
+      @resp = route_api_request(origin, destination)
     else
-      flash[:alert] = "Trip not stored"
-      render 'new'
+      flash[:alert] = "Origin and destination can't be blank. Please try again."
     end
+
+    unless @resp.blank?
+      if @resp["status"] == "OK"
+        @trip.origin_name = @resp["routes"][0]["legs"][0]["start_address"]
+        @trip.destination_name = @resp["routes"][0]["legs"][-1]["end_address"]
+        @trip.raw_response = @resp.to_json.to_s
+
+        if @trip.save
+          flash[:notice] = "Trip stored, but not saved to user"
+          redirect_to trip_path(@trip)
+          return
+        else
+          flash[:alert] = "Trip not stored"
+        end
+      else
+        flash[:alert] = route_status_error(@resp["status"])
+      end
+    end
+
+    # didn't get to save for one of various reasons, send user back
+    render 'new'
   end
 
   def show

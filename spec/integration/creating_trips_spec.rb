@@ -4,17 +4,19 @@ feature "Creating Trips" do
 
   before do
     visit "/"
-
     click_link "Create new trip"
   end
 
   scenario "can create Trip" do
-    fill_in "trip[name]", :with => "A fun trip from CodeFellows to Northgate Mall"
-    fill_in "Starting Point", :with => "511 Boren Ave N 98101"
-    fill_in "Ending Point", :with => "Northgate Mall Seattle WA"
+    fill_in "trip[name]", :with => "A fun trip from CodeFellows to the Airport"
+    fill_in "Starting Point", :with => "511 Boren Ave N, Seattle WA"
+    fill_in "Ending Point", :with => "SeaTac, WA"
     click_button "Submit"
 
-    page.should have_content "Trip stored"
+    within ".alert" do
+      page.should have_content "Trip stored"
+    end
+
   end
 
   scenario "can not create Trip with missing locations" do
@@ -22,19 +24,34 @@ feature "Creating Trips" do
     fill_in "Ending Point", :with => ""
     click_button "Submit"
 
-    page.should have_content "Trip not stored"
-    page.should have_content "Starting point can't be blank"
-    page.should have_content "Ending point can't be blank"
+    within ".alert" do
+      page.should have_content "Origin and destination can't be blank"
+    end
+
+    # page.should have_content "Starting point can't be blank"
+    # page.should have_content "Ending point can't be blank"
   end
 
   scenario "fail gracefully if Google can't find a route" do
-    fill_in "Starting Point", :with => "Timbuktu"
-    fill_in "Ending Point", :with => "The North Pole"
+    fill_in "Starting Point", :with => "511 Boren Ave"
+    fill_in "Ending Point", :with => "Washington, DC"
 
     click_button "Submit"
 
-    page.should have_content "Trip not stored"
-    page.should have_content "We could not find a route between these locations"
+    within ".alert" do
+      page.should have_content "We couldn't find a route"
+    end
+  end
+
+  scenario "fail gracefully if Google can't find the locations" do
+    fill_in "Starting Point", :with => "Whoville"
+    fill_in "Ending Point", :with => "Washington, DC"
+
+    click_button "Submit"
+
+    within ".alert" do
+      page.should have_content "couldn't locate your origin and destination"
+    end
   end
 
   scenario "fail gracefully when location is outside King County" do
