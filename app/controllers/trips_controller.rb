@@ -44,7 +44,7 @@ class TripsController < ApplicationController
     if @trip.valid?
       @resp = route_api_request(origin, destination)
     else
-      flash[:alert] = "Origin and destination can't be blank. Please try again."
+      flash.now[:alert] = "Origin and destination can't be blank. Please try again."
     end
 
     unless @resp.blank?
@@ -58,10 +58,10 @@ class TripsController < ApplicationController
           redirect_to trip_path(@trip)
           return
         else
-          flash[:alert] = "Trip not stored"
+          flash.now[:alert] = "Trip not stored"
         end
       else
-        flash[:alert] = route_status_error(@resp["status"])
+        flash.now[:alert] = route_status_error(@resp["status"])
       end
     end
 
@@ -86,7 +86,7 @@ class TripsController < ApplicationController
     if @trip.valid?
       @resp = route_api_request(origin, destination)
     else
-      flash[:alert] = "Origin and destination can't be blank. Please try again."
+      flash.now[:alert] = "Origin and destination can't be blank. Please try again."
     end
 
     unless @resp.blank?
@@ -100,10 +100,10 @@ class TripsController < ApplicationController
           redirect_to trip_path(@trip)
           return
         else
-          flash[:alert] = "Trip not updated"
+          flash.now[:alert] = "Trip not updated"
         end
       else
-        flash[:alert] = route_status_error(@resp["status"])
+        flash.now[:alert] = route_status_error(@resp["status"])
       end
     end
 
@@ -113,7 +113,7 @@ class TripsController < ApplicationController
 
   def destroy
     @trip.destroy
-    flash[:error] = "Trip was deleted!"
+    flash[:notice] = "Trip was deleted!"
     redirect_to trips_path
   end
 
