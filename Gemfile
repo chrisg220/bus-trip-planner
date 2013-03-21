@@ -29,6 +29,7 @@ group :test, :development do
   gem "pry-doc"
   gem "pry-debugger"
   gem "letter_opener"
+  gem "seed_dump"
 end
 
 group :test do
