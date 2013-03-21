@@ -1,6 +1,9 @@
 require 'spec_helper'
 
 feature "Creating Trips" do
+  let(:bus_trip) { Factory.build(:bus_trip) }
+  let(:no_results_trip) { Factory.build(:no_results_trip) }
+  let(:not_found_trip) { Factory.build(:not_found_trip) }
 
   before do
     visit "/"
@@ -8,9 +11,9 @@ feature "Creating Trips" do
   end
 
   scenario "can create Trip" do
-    fill_in "trip[name]", :with => "A fun trip from CodeFellows to the Airport"
-    fill_in "Starting Point", :with => "511 Boren Ave N, Seattle WA"
-    fill_in "Ending Point", :with => "SeaTac, WA"
+    fill_in "trip[name]", :with => "A fun trip from CodeFellows to Discovery Park"
+    fill_in "Starting Point", :with => bus_trip.origin_name
+    fill_in "Ending Point", :with => bus_trip.destination_name
     click_button "Submit"
 
     within ".alert" do
@@ -32,9 +35,9 @@ feature "Creating Trips" do
     # page.should have_content "Ending point can't be blank"
   end
 
-  scenario "fail gracefully if Google can't find a route" do
-    fill_in "Starting Point", :with => "511 Boren Ave"
-    fill_in "Ending Point", :with => "Washington, DC"
+  scenario "fail gracefully if Google can't find a route (no results)" do
+    fill_in "Starting Point", :with => no_results_trip.origin_name
+    fill_in "Ending Point", :with => no_results_trip.destination_name
 
     click_button "Submit"
 
@@ -44,8 +47,8 @@ feature "Creating Trips" do
   end
 
   scenario "fail gracefully if Google can't find the locations" do
-    fill_in "Starting Point", :with => "Whoville"
-    fill_in "Ending Point", :with => "Washington, DC"
+    fill_in "Starting Point", :with => not_found_trip.origin_name
+    fill_in "Ending Point", :with => not_found_trip.destination_name
 
     click_button "Submit"
 
