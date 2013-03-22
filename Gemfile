@@ -24,6 +24,10 @@ group :assets do
   gem 'bootstrap-sass', '~> 2.3.0.1'
 end
 
+group :development do
+  gem 'awesome_print'
+end
+
 group :test, :development do
   gem 'rspec-rails', '~> 2.11'
   gem "pry-rails"

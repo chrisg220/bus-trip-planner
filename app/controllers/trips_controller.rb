@@ -117,13 +117,17 @@ class TripsController < ApplicationController
     redirect_to trips_path
   end
 
+  def save
+    @trip.user = current_user
+    @trip.save!
+
+    flash[:notice] = "Your trip has been saved"
+    redirect_to trip_path(@trip)
+  end
+
   private
 
   def find_trip
     @trip = Trip.find(params[:id])
-  end
-
-  def authenticate_user!
-    # this is identical to ticketee
   end
 end

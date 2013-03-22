@@ -6,6 +6,7 @@ BusTripPlanner::Application.routes.draw do
   root :to => "trips#index"
 
   resources :trips
+  get "trips/:id/save" => "trips#save", :as => "save_trip"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
