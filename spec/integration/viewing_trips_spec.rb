@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 feature "Viewing Trips" do
-  let!(:trip) { Factory(:trip) }
+  let!(:trip) { Factory(:bus_trip) }
 
   before do
     visit "/"

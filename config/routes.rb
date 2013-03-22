@@ -1,4 +1,6 @@
 BusTripPlanner::Application.routes.draw do
+  devise_for :users
+
   get "fake_api/json"
 
   root :to => "trips#index"
