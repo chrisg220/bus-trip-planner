@@ -37,4 +37,13 @@ describe TripsController do
     message = "Trip could not be found."
     flash[:alert].shoud eql message
   end
+
+  it "gets valid json from google" do
+    VCR.use_cassette('google_directions_call') do
+      get :create, { :trip => {:origin_name =>"511 boren ave n seattle wa",
+                   :destination_name => "1100 17th ave seattle wa" }}
+      response.status.should == 200
+    end
+  end
+
 end

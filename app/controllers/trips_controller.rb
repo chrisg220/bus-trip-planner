@@ -27,19 +27,22 @@ class TripsController < ApplicationController
     destination = params[:trip][:destination_name]
     time = (Time.now + 300).to_i.to_s
 
-    # sensor = false
-    # mode = "transit"
-    # alternatives = true
-    # time_by = "departure" # or arrival
+    sensor = false
+    mode = "transit"
+    alternatives = true
+    time_by = "departure" # or arrival
 
 
     #http://maps.googleapis.com/maps/api/directions/json?origin=511%20North%20Boren%20Ave&destination=Northgate%20Mall,Seattle&sensor=false&mode=transit&alternatives=true&departure_time=1344905500
-    # url = "http://maps.googleapis.com/maps/api/directions/json?origin=" + origin +
-    #           "&destination=" + destination +
-    #           "&sensor=" + sensor.to_s +
-    #           "&mode=" + mode +
-    #           "&alternatives=" + alternatives.to_s +
-    #           "&" + time_by + "_time=" + time
+    url = "http://maps.googleapis.com/maps/api/directions/json?origin=" + origin +
+           "&destination=" + destination +
+           "&sensor=" + sensor.to_s +
+           "&mode=" + mode +
+           "&alternatives=" + alternatives.to_s +
+           "&" + time_by + "_time=" + time
+
+    json = Net::HTTP.get_response(URI(URI.escape(url))).body
+    parsed = JSON.parse(json)
 
     if @trip.valid?
       @resp = route_api_request(origin, destination)

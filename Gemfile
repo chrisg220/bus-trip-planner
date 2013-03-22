@@ -37,6 +37,8 @@ group :test do
   gem 'factory_girl', '2.6.4'
   gem 'email_spec', '1.2.1'
   gem "launchy"
+  gem "vcr"
+  gem "fakeweb"
 end
 
 
