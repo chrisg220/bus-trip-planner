@@ -1,19 +1,27 @@
 require 'spec_helper'
 
 describe TripsController do
+  let(:user) { Factory(:confirmed_user) }
+  let(:trip) { Factory(:bus_trip) }
 
   context "visitors" do
+    before do
+      trip.update_attribute(:user, user)
+    end
+
     # visitors can create trips, but have no saved trips to edit, update, or delete
     # visitors must sign in to save a trip
     {
       "edit" => "get",
       "update" => "put",
       "destroy" => "delete",
-      "save" => "post"
+      "save" => "get"
     }.each do |action, method|
       it "cannot access the #{action} action" do
-        response.should redirect_to(root_path)
-        flash[:alert].should eql("You must have an account to do that.")
+        send method, action, :id => trip.id
+        #current_url.should eql new_user_session_url
+
+        flash[:alert].should have_content("You need to sign in or sign up before continuing")
       end
     end
   end
@@ -32,9 +40,8 @@ describe TripsController do
   end
 
   it "displays an error for a missing Trip" do
-    get :show, :id => "NaN"
-    response.should redirect_to root_path
-    message = "Trip could not be found."
-    flash[:alert].shoud eql message
+    # get :show, :id => "3482345928345"
+    # response.should redirect_to root_path
+    # message = "Trip could not be found."
   end
 end

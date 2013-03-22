@@ -37,4 +37,5 @@ RSpec.configure do |config|
   config.order = "random"
 
   config.include EmailSpec::Helpers
+  config.include Devise::TestHelpers, :type => :controller
 end

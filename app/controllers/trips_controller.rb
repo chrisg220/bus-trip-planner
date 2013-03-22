@@ -129,5 +129,8 @@ class TripsController < ApplicationController
 
   def find_trip
     @trip = Trip.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    flash[:error] = "Trip could not be found."
+    redirect_to root_path
   end
 end
