@@ -48,7 +48,8 @@ class RealTimeController < ApplicationController
           # late
           @response["status"] = "late"
         end
-        @response["time"] = (diff / 60).to_i.to_s + " minutes"
+        @response["m"] = (diff / 60).to_i
+        @response["s"] = diff % 60
       end
     end
 
