@@ -23,23 +23,35 @@ class RealTimeController < ApplicationController
                               "arrivals-and-departures-for-stop/" +
                               stop_id.to_s + ".json?key=" + key.to_s
 
-    puts oba_arrivals_for_stop_url
-
     arrivals_json = JSON.parse(open(URI.escape(oba_arrivals_for_stop_url)).read)
 
     arrivalsAndDepartures = arrivals_json["data"]["arrivalsAndDepartures"]
-
-    puts arrivalsAndDepartures
 
     arrival_time = arrivalsAndDepartures.select do |n|
       n["routeShortName"].to_i == route.to_i && n["scheduledDepartureTime"].to_i == time.to_i
     end
 
-    puts arrival_time.count
+    @response = { "stop_id" => stop_id }
 
-    @response = arrival_time[0] || {}
+    if arrival_time[0]
+      diff = arrival_time[0]["predictedDepartureTime"] - arrival_time[0]["scheduledDepartureTime"]
+      diff = diff/1000
 
-    puts @response.to_json
+      if diff == 0
+        # on time
+        @response["status"] = "on time"
+      else
+        if diff < 0
+          # early!
+          @response["status"] = "early"
+        else
+          # late
+          @response["status"] = "late"
+        end
+        @response["time"] = (diff / 60).to_i.to_s + " minutes"
+      end
+    end
+
     render :json => @response
   end
 end
