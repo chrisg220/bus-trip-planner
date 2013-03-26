@@ -18,3 +18,30 @@ By presenting this aggregated information in a visual way to the user, she can m
 + ▢ **Feature:** Let user store/CRUD selected routes
 + ▢ Figure out how to use GMaps API to fetch legs
 + ▢ **Feature:** store these legs to monitor
+
+## Process flow
+
+![Process flow for bus trip app](/process.png "Process flow")
+
+Sequence diagram generated at http://bramp.github.com/js-sequence-diagrams with the following code:
+
+```
+User->Trip: Creates new Trip
+Trip-->Google API: Requests directions
+Google API-->Trip:
+Note left of One Bus Away API: To do: \nReplace the following \n'transit stop ID' req/resp \nwith local db lookup
+Trip-->One Bus Away API: Requests transit stop IDs
+One Bus Away API-->Trip:
+Note over Route: Route model cleans up\nraw API response
+Trip-->Route: Adds new Route object to Trip for each route
+Trip->User: Shows possible Routes
+Note over User: User slects a specific route \n to expand directions.
+Note right of User: Load Real Time Data \n event triggered
+User-->Real Time Controller: AJAX request to get real time data for route stops
+Real Time Controller-->One Bus Away API: Request latest data from OBA
+One Bus Away API-->Real Time Controller:
+Real Time Controller-->User:
+Note over User: AJAX refreshes realtime data every minute
+User->Account: Registers / Login
+Account->Trip: Load saved trip
+```
