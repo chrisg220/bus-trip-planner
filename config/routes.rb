@@ -2,7 +2,7 @@ BusTripPlanner::Application.routes.draw do
   devise_for :users
 
   get "fake_api/json"
-
+  get "real_time/fetch"
   root :to => "trips#index"
 
   resources :trips

@@ -25,7 +25,7 @@ def bus_realtime(lat, lon, route, time, key)
   minutesAfter = 40
   time = time.to_i*1000
   oba_arrivals_for_stop ="http://api.onebusaway.org/api/where/arrivals-and-departures-for-stop/" + stop_id.to_s +
-                           ".json?key=" + key.to_s
+                           ".json?key=" + key.to_s + "&minutesAfter=" + minutesAfter.to_s
 
   arrivals = open(URI.escape(oba_arrivals_for_stop)).read
   puts URI.escape(oba_arrivals_for_stop)

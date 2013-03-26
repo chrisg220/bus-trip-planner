@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130325210443) do
+ActiveRecord::Schema.define(:version => 20130326195850) do
 
   create_table "routes", :force => true do |t|
     t.integer  "trip_id"
@@ -25,6 +25,16 @@ ActiveRecord::Schema.define(:version => 20130325210443) do
   end
 
   add_index "routes", ["trip_id"], :name => "index_routes_on_trip_id"
+
+  create_table "stops", :force => true do |t|
+    t.string   "name"
+    t.decimal  "lat"
+    t.decimal  "lng"
+    t.integer  "oba_id"
+    t.string   "agency"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "trips", :force => true do |t|
     t.string   "name"
