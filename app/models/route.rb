@@ -17,8 +17,8 @@ class Route < ActiveRecord::Base
     travel_modes = Array.new
     self.route_json["legs"].each do |leg|
       self.duration = leg["duration"]["text"]
-      self.end_time = leg["arrival_time"]["value"].to_i
-      self.start_time = leg["departure_time"]["value"].to_i
+      self.end_time = (leg["arrival_time"]) ? leg["arrival_time"]["value"].to_i : -1
+      self.start_time = (leg["departure_time"]) ? leg["departure_time"]["value"].to_i : -1
       leg["steps"].each_with_index do |step, l|
         legs[l] = Hash.new
         legs[l]["travel_mode"]= step["travel_mode"]
@@ -40,6 +40,7 @@ class Route < ActiveRecord::Base
 
 
   def transit_details (step)
+    key = "05d03911-aeb2-4989-a095-7823ff397bed"
     td= step["transit_details"]
     t_hash = Hash.new
     t_hash["line"] = td["line"]["short_name"]
@@ -47,7 +48,7 @@ class Route < ActiveRecord::Base
     t_hash["departure_stop"]= td["departure_stop"]["name"]
     t_hash["arrival_stop"] = td["arrival_stop"]["name"]
     t_hash["lat"]= td["departure_stop"]["location"]["lat"]
-    t_hash["lon"] = td["departure_stop"]["location"]["lon"]
+    t_hash["lon"] = td["departure_stop"]["location"]["lng"]
     if is_bus?(step)
       t_hash["stop_id"] = stop_id(t_hash["lat"], t_hash["lon"], key)
     end
@@ -63,9 +64,11 @@ class Route < ActiveRecord::Base
                         "&lat=" + lat.to_s +
                         "&lon=" + lon.to_s +
                         "&radius=" + radius.to_s
-    stop= open(URI.escape(oba_stop_id_lookup)).read
+    puts oba_stop_id_lookup
+    stop = open(URI.escape(oba_stop_id_lookup)).read
     stop_json = JSON.parse(stop)
-    if stop_json["status"] == "default"
+    puts stop_json
+    if stop_json["text"] == "OK"
       return stop_json["data"]["stops"][0]["id"]
     else
       nil

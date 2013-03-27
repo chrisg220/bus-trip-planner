@@ -18,7 +18,7 @@ module TripsHelper
   end
 
   def route_api_request(origin, destination, time = Time.now, time_by = "departure", options = {})
-    config = { :sensor => false, :alternatives => true, :mode => "transit", :force => false }
+    config = { :sensor => false, :alternatives => true, :mode => "transit", :force => true }
     config.merge!(options)
 
     if origin.empty? or destination.empty?
@@ -34,6 +34,7 @@ module TripsHelper
             "&alternatives=" + config[:alternatives].to_s +
             "&" + time_by + "_time=" + time.to_i.to_s
 
+      puts url
       resp = JSON.parse(open(URI.escape(url)).read)
     else
       # For testing without querying the "real" API, a variety of "actual"
