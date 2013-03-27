@@ -2,7 +2,7 @@ $(document).ready(function() {
 
   $('#routes > li').click(function(e) {
     //real_time/fetch.json?stop_id=1_75403&route=65&sched_time=1364337615
-    var url = "/real_time/fetch.json";
+
 
     console.log('i clicked');
     $('#routes .steps').slideUp('fast');
@@ -14,11 +14,12 @@ $(document).ready(function() {
       var stop = $(this);
       console.log($(this).data('stop-id'));
 
-      url += "?stop_id=" + $(this).data('stop-id');
-      url += "&route=" + $(this).data('route-id');
-      url += "&sched_time=" + $(this).data('departure-time');
+      var url = "/real_time/fetch.json";
+      url += "?stop_id=" + stop.data('stop-id');
+      url += "&route=" + stop.data('route-id');
+      url += "&sched_time=" + stop.data('departure-time');
 
-      $.ajax({
+      $.ajaxQueue({
         type: "GET",
         url: url,
         dataType: "json",
@@ -26,10 +27,14 @@ $(document).ready(function() {
           console.log(data);
 
 
-          if(data.status !== "on time") {
-            stop.text(Math.abs(data.m) + "m" + data.s + "s " + data.status);
+          if(data.status) {
+            if(data.m) {
+              stop.text(Math.abs(data.m) + "m" + data.s + "s " + data.status);
+            } else {
+              stop.text(data.status);
+            }
           } else {
-            stop.text(data.status);
+            stop.text("??");
           }
 
         }

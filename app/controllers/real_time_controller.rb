@@ -36,22 +36,26 @@ class RealTimeController < ApplicationController
     @response = { "stop_id" => stop_id }
 
     if arrival_time[0]
-      diff = arrival_time[0]["predictedDepartureTime"] - arrival_time[0]["scheduledDepartureTime"]
-      diff = diff/1000
-
-      if diff == 0
-        # on time
-        @response["status"] = "on time"
+      if arrival_time[0]["predictedDepartureTime"] == 0
+        @response["status"] = "unknown"
       else
-        if diff < 0
-          # early!
-          @response["status"] = "early"
+        diff = arrival_time[0]["predictedDepartureTime"] - arrival_time[0]["scheduledDepartureTime"]
+        diff = diff/1000
+
+        if diff == 0
+          # on time
+          @response["status"] = "on time"
         else
-          # late
-          @response["status"] = "late"
+          if diff < 0
+            # early!
+            @response["status"] = "early"
+          else
+            # late
+            @response["status"] = "late"
+          end
+          @response["m"] = (diff / 60).to_i
+          @response["s"] = diff % 60
         end
-        @response["m"] = (diff / 60).to_i
-        @response["s"] = diff % 60
       end
     end
 
