@@ -3,7 +3,7 @@ BusTripPlanner::Application.routes.draw do
 
   get "fake_api/json"
   get "real_time/fetch"
-  root :to => "trips#index"
+  root :to => "trips#new"
 
   resources :trips
   get "trips/:id/save" => "trips#save", :as => "save_trip"

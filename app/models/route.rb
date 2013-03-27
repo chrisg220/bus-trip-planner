@@ -7,8 +7,6 @@ class Route < ActiveRecord::Base
   belongs_to :trip
   before_create :parse_gmaps
 
-
-
   private
 
   def parse_gmaps
