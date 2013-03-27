@@ -47,6 +47,7 @@ class TripsController < ApplicationController
 
         @resp["routes"].each do |route|
           @trip.routes.create({ :route_json => route, :trip_id => @trip })
+          sleep(0.5)
         end
 
         @trip.save!
@@ -54,6 +55,8 @@ class TripsController < ApplicationController
         # @resp["status"] not OK, show error message
         flash.now[:alert] = route_status_error(@resp["status"])
       end
+    else
+      flash.now[:alert] = "Not fresh data"
     end
 
     @json = JSON.parse(@trip.raw_response)

@@ -17,6 +17,18 @@ module TripsHelper
     return samples[type]
   end
 
+  def real_time_container(step)
+    if step["stop_id"]
+      html = '<div class="real-time label label-info" '
+      html << 'data-stop-id="' + step["stop_id"] + '"'
+      html << 'data-route-id="' + step["line"] + '"'
+      html << 'data-departure-time="' + step["departure_time"].to_s + '">'
+      html << step["stop_id"]
+      html << '</div>'
+      html.html_safe
+    end
+  end
+
   def route_api_request(origin, destination, time = Time.now, time_by = "departure", options = {})
     config = { :sensor => false, :alternatives => true, :mode => "transit", :force => true }
     config.merge!(options)

@@ -23,6 +23,8 @@ class RealTimeController < ApplicationController
                               "arrivals-and-departures-for-stop/" +
                               stop_id.to_s + ".json?key=" + key.to_s
 
+    puts oba_arrivals_for_stop_url
+
     arrivals_json = JSON.parse(open(URI.escape(oba_arrivals_for_stop_url)).read)
 
     arrivalsAndDepartures = arrivals_json["data"]["arrivalsAndDepartures"]

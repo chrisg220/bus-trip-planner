@@ -11,10 +11,10 @@
 </div>
 
 
-<div class="content">
+<div id="trip" class="content">
   Here we show our Route objets: (# of routes = <%= @trip.routes.length %>)
 
-  <ul>
+  <ul id="routes">
   <% @trip.routes.each do |route| %>
     <li>
       <span class="snapshot"><%= route[:snapshot] %></span>
@@ -22,16 +22,13 @@
       End time: <%= route[:end_time] if (route[:end_time] > 0) %>
 
       <% json = JSON.parse(route[:response]) %>
-      <ul>
+      <ul class="steps">
       <% json.each do |step| %>
         <li>
+          #<%= step["line"] %>
           <%= step["html_instructions"] %><br/>
           Duration: <%= step["duration"] %>
-          <% if step["stop_id"] %>
-            <div class="real-time label label-info" data-stop-id=" <%= step["stop_id"] %>">
-            11 minutes
-            </div>
-          <% end %>
+          <%= real_time_container(step) %>
         </li>
       <% end %>
       </ul>

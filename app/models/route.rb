@@ -65,7 +65,9 @@ class Route < ActiveRecord::Base
                         "&lat=" + lat.to_s +
                         "&lon=" + lon.to_s +
                         "&radius=" + radius.to_s
+
     puts oba_stop_id_lookup
+
     stop = open(URI.escape(oba_stop_id_lookup)).read
     stop_json = JSON.parse(stop)
     puts stop_json
