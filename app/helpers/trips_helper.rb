@@ -18,7 +18,7 @@ module TripsHelper
   end
 
   def route_api_request(origin, destination, time = Time.now, time_by = "departure", options = {})
-    config = { :sensor => false, :alternatives => true, :mode => "transit", :force => false }
+    config = { :sensor => false, :alternatives => true, :mode => "transit", :force => true }
     config.merge!(options)
 
     if origin.empty? or destination.empty?
@@ -34,7 +34,8 @@ module TripsHelper
             "&alternatives=" + config[:alternatives].to_s +
             "&" + time_by + "_time=" + time.to_i.to_s
 
-      @resp = JSON.parse(open(URI.escape(url)).read)
+      puts url
+      resp = JSON.parse(open(URI.escape(url)).read)
     else
       # For testing without querying the "real" API, a variety of "actual"
       # responses are provided at the url below for a sample of routes. Since
@@ -54,36 +55,36 @@ module TripsHelper
       when /511 Boren Ave/
         case destination
         when /Discovery Park, Seattle/
-          @resp = find_sample(:bus)
+          resp = find_sample(:bus)
         when /SeaTac/
-          @resp = find_sample(:rail)
+          resp = find_sample(:rail)
         when /Vashon Island/
-          @resp = find_sample(:ferry)
+          resp = find_sample(:ferry)
         when /20601 Washington 410 Washington, Bonny Lake WA/
-          @resp = find_sample(:car)
+          resp = find_sample(:car)
         when /Boeing Co, Mukilteo, WA/
-          @resp = find_sample(:ex_king)
+          resp = find_sample(:ex_king)
         when /Amazon, Terry Avenue North/
-          @resp = find_sample(:walking)
+          resp = find_sample(:walking)
         else
-          @resp = find_sample(:no_results)
+          resp = find_sample(:no_results)
         end
       else
-        @resp = find_sample(:not_found)
+        resp = find_sample(:not_found)
       end
     end
 
-    return @resp
+    return resp
   end
 
   def route_status_error(status)
     case status
     when "NOT_FOUND"
-      @message = "Hrm. We couldn't locate your origin and destination on the map. Want to try again?"
+      "Hrm. We couldn't locate your origin and destination on the map. Want to try again?"
     when "ZERO_RESULTS"
-      @message = "Oops! We couldn't find a route between your origin and destination on public transit."
+      "Oops! We couldn't find a route between your origin and destination on public transit."
     else
-      @message = "Uh oh! We had an unanticipated error. We'll look into it."
+      "Uh oh! We had an unanticipated error. We'll look into it."
     end
   end
 

@@ -23,15 +23,19 @@ class TripsController < ApplicationController
 
   def create
     @trip = Trip.new(params[:trip])
-    origin = params[:trip][:origin_name]
-    destination = params[:trip][:destination_name]
     #time = (Time.now + 300).to_i.to_s
 
-    if @trip.valid?
-      @resp = route_api_request(origin, destination)
+    if @trip.save
+      flash[:notice] = "Trip stored, but not saved to user"
+      redirect_to trip_path(@trip)
     else
       flash.now[:alert] = "Origin and destination can't be blank. Please try again."
+      render 'new'
     end
+  end
+
+  def show
+    @resp = route_api_request(@trip.origin_name, @trip.destination_name)
 
     unless @resp.blank?
       if @resp["status"] == "OK"
@@ -39,38 +43,22 @@ class TripsController < ApplicationController
         @trip.destination_name = @resp["routes"][0]["legs"][-1]["end_address"]
         @trip.raw_response = @resp.to_json.to_s
 
+        @trip.routes.destroy_all
+
         @resp["routes"].each do |route|
-          @trip.routes.new(route_json: route)
+          @trip.routes.create({ :route_json => route, :trip_id => @trip })
         end
-        if @trip.save
-          flash[:notice] = "Trip stored, but not saved to user"
-          redirect_to trip_path(@trip)
-          return
-        else
-          flash.now[:alert] = "Trip not stored"
-        end
+
+        @trip.save!
       else
+        # @resp["status"] not OK, show error message
         flash.now[:alert] = route_status_error(@resp["status"])
       end
     end
 
-    # didn't get to save for one of various reasons, send user back
-    render 'new'
-  end
-
-  def show
     @json = JSON.parse(@trip.raw_response)
 
-    # @trip = Trip.new(params[:id])
-    # @routes = @trip.routes.all
-    # this should return an array of the routes within the trip
-
-
-
-    # return saved trip method
-    # this action will trigger SAVING the trip for the current user.
-    # in create, the trip is saved but not assigned a user
-    # in order to edit, delete, etc, the trip must first be saved
+    puts @trip.routes.length
   end
 
   def edit
@@ -115,6 +103,12 @@ class TripsController < ApplicationController
   end
 
   def save
+    # return saved trip method
+    # this action will trigger SAVING the trip for the current user.
+    # in create, the trip is saved but not assigned a user
+    # in order to edit, delete, etc, the trip must first be saved
+
+
     @trip.user = current_user
     @trip.save!
 
