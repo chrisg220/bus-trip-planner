@@ -42,6 +42,7 @@ class TripsController < ApplicationController
         @resp["routes"].each do |route|
           @trip.routes.new(route_json: route)
         end
+
         if @trip.save
           flash[:notice] = "Trip stored, but not saved to user"
           redirect_to trip_path(@trip)
@@ -50,6 +51,7 @@ class TripsController < ApplicationController
           flash.now[:alert] = "Trip not stored"
         end
       else
+        # @resp["status"] not OK, show error message
         flash.now[:alert] = route_status_error(@resp["status"])
       end
     end
@@ -60,12 +62,10 @@ class TripsController < ApplicationController
 
   def show
     @json = JSON.parse(@trip.raw_response)
+    @routes = @trip.routes.all
 
-    # @trip = Trip.new(params[:id])
-    # @routes = @trip.routes.all
+    puts @routes.length
     # this should return an array of the routes within the trip
-
-
 
     # return saved trip method
     # this action will trigger SAVING the trip for the current user.
