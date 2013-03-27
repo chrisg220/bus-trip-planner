@@ -35,7 +35,7 @@ class TripsController < ApplicationController
   end
 
   def show
-    @resp = route_api_request(@trip.origin_name, @trip.destination_name)
+    #@resp = route_api_request(@trip.origin_name, @trip.destination_name)
 
     unless @resp.blank?
       if @resp["status"] == "OK"

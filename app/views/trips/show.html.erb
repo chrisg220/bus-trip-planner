@@ -1,4 +1,3 @@
-
 <div class="btn-group">
   <button class="btn">Actions</button>
   <button class="btn dropdown-toggle" data-toggle="dropdown">
@@ -11,6 +10,35 @@
   </ul>
 </div>
 
+
+<div class="content">
+  Here we show our Route objets: (# of routes = <%= @trip.routes.length %>)
+
+  <ul>
+  <% @trip.routes.each do |route| %>
+    <li>
+      <span class="snapshot"><%= route[:snapshot] %></span>
+      Start time: <%= route[:start_time] if (route[:start_time] > 0) %><br/>
+      End time: <%= route[:end_time] if (route[:end_time] > 0) %>
+
+      <% json = JSON.parse(route[:response]) %>
+      <ul>
+      <% json.each do |step| %>
+        <li>
+          <%= step["html_instructions"] %><br/>
+          Duration: <%= step["duration"] %>
+          <% if step["stop_id"] %>
+            <div class="real-time label label-info" data-stop-id=" <%= step["stop_id"] %>">
+            11 minutes
+            </div>
+          <% end %>
+        </li>
+      <% end %>
+      </ul>
+    </li>
+  <% end %>
+  </ul>
+</div>
 
 <div class="content">
 <h2>Directions to <%= @trip.name %></h2>

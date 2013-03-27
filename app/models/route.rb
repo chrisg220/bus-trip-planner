@@ -49,6 +49,9 @@ class Route < ActiveRecord::Base
     t_hash["arrival_stop"] = td["arrival_stop"]["name"]
     t_hash["lat"]= td["departure_stop"]["location"]["lat"]
     t_hash["lon"] = td["departure_stop"]["location"]["lng"]
+    t_hash["arrival_time"] = td["arrival_time"]["value"].to_i
+    t_hash["departure_time"] = td["departure_time"]["value"].to_i
+
     if is_bus?(step)
       t_hash["stop_id"] = stop_id(t_hash["lat"], t_hash["lon"], key)
     end
