@@ -32,7 +32,7 @@ module TripsHelper
             "&sensor=" + config[:sensor].to_s +
             "&mode=" + config[:mode] +
             "&alternatives=" + config[:alternatives].to_s +
-            "&" + time_by + "_time=" + time
+            "&" + time_by + "_time=" + time.to_i.to_s
 
       @resp = JSON.parse(open(URI.escape(url)).read)
     else

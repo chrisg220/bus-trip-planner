@@ -1,11 +1,13 @@
 class Route < ActiveRecord::Base
-  attr_accessible :duration, :end_time, :response, :snapshot, :start_time, :trip_id
+  attr_accessible :duration, :end_time, :response, :snapshot, :start_time, :trip_id, :route_json
   attr_accessor :route_json
   # the following macro may be needed, it is a
   # quick and dirty macro for making variables accessible to self methods
-  # attr_accessor :duration, :end_time, :response, :snapshot, :start_time
+  #attr_accessor :duration, :end_time, :response, :snapshot, :start_time
   belongs_to :trip
   before_create :parse_gmaps
+
+
 
   private
 

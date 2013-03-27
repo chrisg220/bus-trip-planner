@@ -40,7 +40,7 @@ class TripsController < ApplicationController
         @trip.raw_response = @resp.to_json.to_s
 
         @resp["routes"].each do |route|
-          @trip.route.new(route_json: route)
+          @trip.routes.new(route_json: route)
         end
         if @trip.save
           flash[:notice] = "Trip stored, but not saved to user"
@@ -61,8 +61,8 @@ class TripsController < ApplicationController
   def show
     @json = JSON.parse(@trip.raw_response)
 
-    # @trip = Trips.new(params[:id])
-    # @trip.route.all
+    # @trip = Trip.new(params[:id])
+    # @routes = @trip.routes.all
     # this should return an array of the routes within the trip
 
 
