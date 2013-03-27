@@ -25,21 +25,7 @@ class TripsController < ApplicationController
     @trip = Trip.new(params[:trip])
     origin = params[:trip][:origin_name]
     destination = params[:trip][:destination_name]
-    time = (Time.now + 300).to_i.to_s
-
-    # sensor = false
-    # mode = "transit"
-    # alternatives = true
-    # time_by = "departure" # or arrival
-
-
-    #http://maps.googleapis.com/maps/api/directions/json?origin=511%20North%20Boren%20Ave&destination=Northgate%20Mall,Seattle&sensor=false&mode=transit&alternatives=true&departure_time=1344905500
-    # url = "http://maps.googleapis.com/maps/api/directions/json?origin=" + origin +
-    #           "&destination=" + destination +
-    #           "&sensor=" + sensor.to_s +
-    #           "&mode=" + mode +
-    #           "&alternatives=" + alternatives.to_s +
-    #           "&" + time_by + "_time=" + time
+    #time = (Time.now + 300).to_i.to_s
 
     if @trip.valid?
       @resp = route_api_request(origin, destination)
@@ -53,6 +39,9 @@ class TripsController < ApplicationController
         @trip.destination_name = @resp["routes"][0]["legs"][-1]["end_address"]
         @trip.raw_response = @resp.to_json.to_s
 
+        @resp["routes"].each do |route|
+          @trip.route.new(route_json: route)
+        end
         if @trip.save
           flash[:notice] = "Trip stored, but not saved to user"
           redirect_to trip_path(@trip)
@@ -71,6 +60,14 @@ class TripsController < ApplicationController
 
   def show
     @json = JSON.parse(@trip.raw_response)
+
+    # @trip = Trips.new(params[:id])
+    # @trip.route.all
+    # this should return an array of the routes within the trip
+
+
+
+    # return saved trip method
     # this action will trigger SAVING the trip for the current user.
     # in create, the trip is saved but not assigned a user
     # in order to edit, delete, etc, the trip must first be saved

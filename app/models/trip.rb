@@ -4,4 +4,5 @@ class Trip < ActiveRecord::Base
   validates :destination_name, :presence => true
 
   belongs_to :user
+  has_many :routes
 end

@@ -1,26 +1,82 @@
 class Route < ActiveRecord::Base
   attr_accessible :duration, :end_time, :response, :snapshot, :start_time, :trip_id
-  attr_accessor :route
+  attr_accessor :route_json
+  # the following macro may be needed, it is a
+  # quick and dirty macro for making variables accessible to self methods
+  # attr_accessor :duration, :end_time, :response, :snapshot, :start_time
   belongs_to :trip
+  before_create :parse_gmaps
+
+  private
 
   def parse_gmaps
     require 'json'
     legs = Array.new
-    self.route["legs"].each do |leg|
+    travel_modes = Array.new
+    self.route_json["legs"].each do |leg|
+      self.duration = leg["duration"]["text"]
+      self.end_time = leg["arrival_time"]["value"].to_i
+      self.start_time = leg["departure_time"]["value"].to_i
       leg["steps"].each_with_index do |step, l|
         legs[l] = Hash.new
         legs[l]["travel_mode"]= step["travel_mode"]
+        travel_modes << step["travel_mode"]
         legs[l]["html_instructions"]  = step["html_instructions"]
+        legs[l]["duration"] = step["duration"]["text"]
+        #legs[l]["duration_int"] = step["duration"]["value"]
         if step["transit_details"]
-          legs[l]["line"] = step["transit_details"]["line"]["short_name"]
-          legs[l]["vehicle_name"] = step["transit_details"]["line"]["vehicle"]["name"]
-          legs[l]["departure_stop"]= step["transit_details"]["departure_stop"]["name"]
-          legs[l]["arrival_stop"] = step["transit_details"]["arrival_stop"]["name"]
+          legs[l].update(transit_details(step))
         end
       end
     end
     #this returns a string
     self.response = JSON.generate(legs)
     #JSON.parse returns the data structure exactly
+    self.snapshot = JSON.generate(travel_modes)
   end
+
+
+
+  def transit_details (step)
+    td= step["transit_details"]
+    t_hash = Hash.new
+    t_hash["line"] = td["line"]["short_name"]
+    t_hash["vehicle_name"] = td["line"]["vehicle"]["name"]
+    t_hash["departure_stop"]= td["departure_stop"]["name"]
+    t_hash["arrival_stop"] = td["arrival_stop"]["name"]
+    t_hash["lat"]= td["departure_stop"]["location"]["lat"]
+    t_hash["lon"] = td["departure_stop"]["location"]["lon"]
+    if is_bus?(step)
+      t_hash["stop_id"] = stop_id(t_hash["lat"], t_hash["lon"], key)
+    end
+    return t_hash
+  end
+
+  def stop_id(lat, lon, key)
+    require 'uri'
+    require 'open-uri'
+    require 'json'
+    radius = 0.5
+    oba_stop_id_lookup ="http://api.onebusaway.org/api/where/stops-for-location.json?key=" + key.to_s +
+                        "&lat=" + lat.to_s +
+                        "&lon=" + lon.to_s +
+                        "&radius=" + radius.to_s
+    stop= open(URI.escape(oba_stop_id_lookup)).read
+    stop_json = JSON.parse(stop)
+    if stop_json["status"] == "default"
+      return stop_json["data"]["stops"][0]["id"]
+    else
+      nil
+    end
+  end
+
+  def is_bus?(step)
+    if step["travel_mode"] == "TRANSIT" && step["transit_details"]["line"]["vehicle"]["type"] == "BUS"
+      return true
+    else
+      return false
+    end
+  end
+
 end
+
