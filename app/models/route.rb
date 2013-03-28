@@ -77,7 +77,7 @@ class Route < ActiveRecord::Base
     stop = open(URI.escape(oba_stop_id_lookup)).read
     stop_json = JSON.parse(stop)
     puts stop_json
-    if stop_json["text"] == "OK"
+    if stop_json["text"] == "OK" && stop_json["data"]["stops"].length > 0
       return stop_json["data"]["stops"][0]["id"]
     else
       nil

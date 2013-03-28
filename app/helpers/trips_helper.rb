@@ -32,9 +32,9 @@ module TripsHelper
   def route_icons(snapshot)
     modes = snapshot.split(",")
     html = '<div class="snapshot">'
-    modes.each do |s|
+    modes.each_with_index do |s, index|
       html << "<i class=\"icon icon-#{s.downcase}\"></i>"
-      html << "&rarr;"
+      html << "&rarr;" unless index == modes.length-1
     end
     html << '</div>'
     html.html_safe
