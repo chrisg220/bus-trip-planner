@@ -1,6 +1,6 @@
 <div class="container-fluid show">
-    <div class="row">
-      <div class="span5">
+      <div class="span5 trips-info-container">
+        <!--
         <div class="btn-group">
           <button class="btn">Actions</button>
           <button class="btn dropdown-toggle" data-toggle="dropdown">
@@ -12,10 +12,13 @@
             <li><%= link_to "Delete", trip_path(@trip), :method => :delete, :data => { :confirm => "Are you sure you want to delete this trip?" } %></li>
           </ul>
         </div>
+        -->
 
 
         <div id="trip" class="content">
+          <!--
           Here we show our Route objets: (# of routes = <%= @trip.routes.length %>)
+          -->
 
           <ul id="routes">
           <% @trip.routes.each do |route| %>
@@ -35,8 +38,7 @@
                 <li>
                   <div>
                   <div class="rt-info-bucket">
-                    <span>#<%= step["line"] %></span>
-                    <span class="instructions"><%=  step["html_instructions"] %></span>
+                    <span class="instructions">#<%= step["line"] %><%=  step["html_instructions"] %></span>
                     <span class="route-duration"><%= step["duration"] %><span>
                   </div>
                   <div class="rt-timer-bucket">
@@ -51,8 +53,7 @@
           </ul>
         </div>
       </div>
-      <div class="span7">
+      <div class="span7 trips-map-container">
         [Insert Map]
       </div>
-    </div>
   </div>

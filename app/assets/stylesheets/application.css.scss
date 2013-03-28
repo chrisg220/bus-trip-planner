@@ -17,10 +17,32 @@ $debug : true;
   div { outline: dashed 1px red; }
 }
 
-body { padding-top: 65px; }
+/* Override Twitter Boostrap
+************************************************************************/
+[class*="span"] { margin-left: 0; }
+.container-fluid { padding: 0; margin: 0;}
+.navbar {
+  .btn-group, .brand  {margin: 0;}
+}
+.navbar-inner {background: #3a87ad;}
+
+
+
+/*
+************************************************************************/
+body { padding-top: 40px; }
 
 div.nav-collapse {
-
+  float: right;
+  display: inline-block;
+  margin: 10px;
 }
 
+.nav.secondary {
+  font-size: 12px;
+  float:right;
+}
+
+img.logo.bbt { width: 300px;}
+h1.logo { visibility: hidden; display: none; text-indent: -9999px;}
 
