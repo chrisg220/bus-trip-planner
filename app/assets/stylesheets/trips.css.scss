@@ -6,7 +6,6 @@
 
 div.show {
   position:fixed;
-  margin-top: 17px;
   height:100%;
   width:100%
 }
@@ -16,6 +15,10 @@ div.show {
 
 .trips-info-container {
   background: #ccc;
+  border: solid 1px #888;
+
+  -webkit-box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, .5);
+  box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, .5);
 }
 
 .map-container{ margin-left: 0px;}
@@ -28,7 +31,7 @@ ul#routes {
   }
 
   li {
-    border-top: solid 1px #720000;
+    border: solid 1px #333;
 
     /* text */
     color: #fff;
@@ -109,4 +112,11 @@ div.snapshot { display: inline-block;}
 .icon-walking { background-image: url(asset_path('icon-walk.png', image)); }
 .icon-tram { background-image: url(asset_path('icon-tram.png', image)); }
 .icon-car { background-image: url(asset_path('icon-car.png', image)); }
+
+/* Vertical Phone View
+************************************************************************/
+@media screen and (max-width:450px) {
+  #canvas { display: none; visibility: hidden;}
+  div.trips-info-container  { width: 100%; }
+}
 

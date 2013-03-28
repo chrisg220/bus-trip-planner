@@ -11,7 +11,7 @@
  *= require bootstrap
  *= require_tree .
  */
-$debug : true;
+$debug : false;
 
 @if $debug == true {
   div { outline: dashed 1px red; }
@@ -30,12 +30,13 @@ $debug : true;
 
 /*
 ************************************************************************/
-body { padding-top: 40px; }
+body.bbt { margin-top: 57px;}
 
 div.nav-collapse {
   float: right;
   display: inline-block;
   margin: 10px;
+  color: #fff;
 }
 
 .nav.secondary {
@@ -45,4 +46,11 @@ div.nav-collapse {
 
 img.logo.bbt { width: 300px;}
 h1.logo { visibility: hidden; display: none; text-indent: -9999px;}
+
+
+/* Vertical Phone View
+************************************************************************/
+@media screen and (max-width:450px) {
+  img.logo.bbt { width: 150px;}
+}
 
