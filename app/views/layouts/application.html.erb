@@ -22,7 +22,7 @@
     function initialize() {
       var mapOptions = {
         center: new google.maps.LatLng(47.620, -122.347),
-        zoom: 13,
+        zoom: 14,
         mapTypeId: google.maps.MapTypeId.ROADMAP
       };
       var map = new google.maps.Map(document.getElementById("map-canvas"),
@@ -67,7 +67,7 @@
                   <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu">
-                  <li> <%= link_to "Sign out", destroy_user_session_path, :method => :delete %></li>
+                  <li> <%= link_to "Sign out", destroy_user_session_path %></li>
                 </ul>
               </div>
             </span>
