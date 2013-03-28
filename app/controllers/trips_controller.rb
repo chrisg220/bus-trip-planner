@@ -24,7 +24,6 @@ class TripsController < ApplicationController
   def create
     @trip = Trip.new(params[:trip])
     #time = (Time.now + 300).to_i.to_s
-
     if @trip.save
       flash[:notice] = "Trip stored, but not saved to user"
       redirect_to trip_path(@trip)
@@ -35,33 +34,37 @@ class TripsController < ApplicationController
   end
 
   def show
-    #@resp = route_api_request(@trip.origin_name, @trip.destination_name)
-
-    unless @resp.blank?
-      if @resp["status"] == "OK"
-        @trip.origin_name = @resp["routes"][0]["legs"][0]["start_address"]
-        @trip.destination_name = @resp["routes"][0]["legs"][-1]["end_address"]
-        @trip.raw_response = @resp.to_json.to_s
-
-        @trip.routes.destroy_all
-
-        @resp["routes"].each do |route|
-          @trip.routes.create({ :route_json => route, :trip_id => @trip })
-          sleep(0.5)
-        end
-
-        @trip.save!
-      else
-        # @resp["status"] not OK, show error message
-        flash.now[:alert] = route_status_error(@resp["status"])
-      end
+    @resp = route_api_request(@trip.origin_name, @trip.destination_name)
+    if @resp["status"]!= "OK"
+      flash.now[:alert] = "Bad start or end location"
+      render 'new'
     else
-      flash.now[:alert] = "Not fresh data"
+      unless @resp.blank?
+        if @resp["status"] == "OK"
+          @trip.origin_name = @resp["routes"][0]["legs"][0]["start_address"]
+          @trip.destination_name = @resp["routes"][0]["legs"][-1]["end_address"]
+          @trip.raw_response = @resp.to_json.to_s
+
+          @trip.routes.destroy_all
+
+          @resp["routes"].each do |route|
+            @trip.routes.create({ :route_json => route, :trip_id => @trip })
+            sleep(0.5)
+          end
+
+          @trip.save!
+        else
+          # @resp["status"] not OK, show error message
+          flash.now[:alert] = route_status_error(@resp["status"])
+        end
+      else
+        flash.now[:alert] = "Not fresh data"
+      end
+
+      @json = JSON.parse(@trip.raw_response)
+
+      puts @trip.routes.length
     end
-
-    @json = JSON.parse(@trip.raw_response)
-
-    puts @trip.routes.length
   end
 
   def edit
