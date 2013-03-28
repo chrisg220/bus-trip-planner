@@ -46,7 +46,8 @@
         <a class="brand" href="/"><img src="/assets/logo_bbt.png" class="logo bbt"></a><h1 class="logo">Better Bus Tracker</h1>
         <div class="nav-collapse">
           <% if user_signed_in? %>
-            <span>
+
+            <span class="sec-nav">
               Happy travels,
               <div class="btn-group btn-inverse">
                 <button class="btn btn-inverse"><%= current_user.email %></button>
@@ -58,6 +59,19 @@
                 </ul>
               </div>
             </span>
+
+            <span class="sec-nav-mobile">
+              <div class="btn-group btn-inverse">
+                <button class="btn btn-inverse"><i class="icon-user icon-white"></i></button>
+                <button class="btn dropdown-toggle btn-inverse" data-toggle="dropdown">
+                  <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                  <li> <%= link_to "Sign out", destroy_user_session_path, :method => :delete %></li>
+                </ul>
+              </div>
+            </span>
+
           <% else %>
           <ul class="nav">
             <li><%= link_to "Sign up", new_user_registration_path %></li>

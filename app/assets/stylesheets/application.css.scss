@@ -37,7 +37,7 @@ body.bbt { margin-top: 57px;}
 div.nav-collapse {
   float: right;
   display: inline-block;
-  margin: 10px;
+  margin: 13px;
   color: #fff;
 }
 
@@ -50,6 +50,7 @@ img.logo.bbt { width: 300px;}
 h1.logo { visibility: hidden; display: none; text-indent: -9999px;}
 
 h1, h2, h3, h4 { font-family: 'Merriweather Sans', sans-serif;}
+h1 { margin: 20px 0 25px 0; }
 
 
 /* Application Styles
@@ -58,10 +59,21 @@ footer {
   background: $primaryColor1;
 }
 
+/* Screen View
+************************************************************************/
+@media screen and (min-width:450px) {
+  img.logo.bbt { width: 300px;}
+  .sec-nav { display: block; visibility: visible;}
+  .sec-nav-mobile { display: none; visibility: hidden;}
+}
 
 /* Vertical Phone View
 ************************************************************************/
-@media screen and (max-width:450px) {
-  img.logo.bbt { width: 150px;}
+@media (max-width: 650px) {
+  .sec-nav { display: none; visibility: hidden;}
+  .sec-nav-mobile { display: block; visibility: visible;}
+}
+@media  (max-width: 450px) {
+  img.logo.bbt { width: 200px; margin-top: 3px;}
 }
 
