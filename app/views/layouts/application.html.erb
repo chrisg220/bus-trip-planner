@@ -33,7 +33,7 @@
   <%= csrf_meta_tags %>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
-<body class="bbt">
+<body class=" <%= params[:controller] %> <%= params[:action] %> ">
   <div class="navbar navbar-fixed-top">
     <div class="navbar-inner">
       <div class="container-fluid">
@@ -89,7 +89,9 @@
 
         <%= bootstrap_flash %>
   -->
-        <%= yield %>
+  <div class="wrapper row-fluid <%= params[:controller] %> <%= params[:action] %>">
+    <%= yield %>
+  </div>
   <!--
       </div>
     </div>

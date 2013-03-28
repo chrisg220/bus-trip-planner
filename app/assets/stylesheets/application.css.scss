@@ -11,6 +11,9 @@
  *= require bootstrap
  *= require_tree .
  */
+
+@import "colors";
+
 $debug : false;
 
 @if $debug == true {
@@ -33,6 +36,8 @@ $primaryColor1 : #3a87ad;
 /* Application Styles
 ************************************************************************/
 body.bbt { margin-top: 57px;}
+
+.wrapper { margin-top: 57px;}
 
 div.nav-collapse {
   float: right;

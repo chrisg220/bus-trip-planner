@@ -1,8 +1,27 @@
-// Place all the styles related to the trips controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+// BetterBus Tracker
+// 2013
+
+@import "colors";
+
+body.trips.new {
+  background: url('/assets/bg_bus_tunnel.jpg') no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
 
 #routes ul.steps { display: none; }
+
+.container.new {
+  h2 { color: $primaryColor1; margin-bottom: 30px; }
+  color: #fff;
+  background: rgba(0, 0, 0, .8);
+  border-radius: 6px;
+  radius: 6px;
+  padding: 35px 0;
+  margin: 30px 0;
+}
 
 div.show {
   position:fixed;
