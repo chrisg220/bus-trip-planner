@@ -20,7 +20,11 @@ class Route < ActiveRecord::Base
       leg["steps"].each_with_index do |step, l|
         legs[l] = Hash.new
         legs[l]["travel_mode"]= step["travel_mode"]
-        travel_modes << step["travel_mode"]
+        if step["transit_details"] && step["transit_details"]["line"]["vehicle"]["type"]
+          travel_modes << step["transit_details"]["line"]["vehicle"]["type"]
+        else
+          travel_modes << step["travel_mode"]
+        end
         legs[l]["html_instructions"]  = step["html_instructions"]
         legs[l]["duration"] = step["duration"]["text"]
         #legs[l]["duration_int"] = step["duration"]["value"]
@@ -32,7 +36,7 @@ class Route < ActiveRecord::Base
     #this returns a string
     self.response = JSON.generate(legs)
     #JSON.parse returns the data structure exactly
-    self.snapshot = JSON.generate(travel_modes)
+    self.snapshot = travel_modes.join(",")
   end
 
 
