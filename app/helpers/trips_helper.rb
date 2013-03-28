@@ -23,7 +23,7 @@ module TripsHelper
       html << 'data-stop-id="' + step["stop_id"] + '"'
       html << 'data-route-id="' + step["line"] + '"'
       html << 'data-departure-time="' + step["departure_time"].to_s + '">'
-      html << step["stop_id"]
+      html << 'checking...'
       html << '</div>'
       html.html_safe
     end

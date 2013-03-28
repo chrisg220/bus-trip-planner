@@ -19,6 +19,8 @@ class RealTimeController < ApplicationController
     time = params[:sched_time].to_i * 1000
     minutesAfter = 40
 
+    @response = { "stop_id" => stop_id }
+
     oba_arrivals_for_stop_url = "http://api.onebusaway.org/api/where/" +
                               "arrivals-and-departures-for-stop/" +
                               stop_id.to_s + ".json?key=" + key.to_s
@@ -32,8 +34,6 @@ class RealTimeController < ApplicationController
     arrival_time = arrivalsAndDepartures.select do |n|
       n["routeShortName"].to_i == route.to_i && n["scheduledDepartureTime"].to_i == time.to_i
     end
-
-    @response = { "stop_id" => stop_id }
 
     if arrival_time[0]
       if arrival_time[0]["predictedDepartureTime"] == 0
