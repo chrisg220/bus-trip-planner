@@ -17,6 +17,8 @@ $debug : false;
   div { outline: dashed 1px red; }
 }
 
+$primaryColor1 : #3a87ad;
+
 /* Override Twitter Boostrap
 ************************************************************************/
 [class*="span"] { margin-left: 0; }
@@ -24,11 +26,11 @@ $debug : false;
 .navbar {
   .btn-group, .brand  {margin: 0;}
 }
-.navbar-inner {background: #3a87ad;}
+.navbar-inner {background: $primaryColor1;}
 
 
 
-/*
+/* Application Styles
 ************************************************************************/
 body.bbt { margin-top: 57px;}
 
@@ -46,6 +48,15 @@ div.nav-collapse {
 
 img.logo.bbt { width: 300px;}
 h1.logo { visibility: hidden; display: none; text-indent: -9999px;}
+
+h1, h2, h3, h4 { font-family: 'Merriweather Sans', sans-serif;}
+
+
+/* Application Styles
+************************************************************************/
+footer {
+  background: $primaryColor1;
+}
 
 
 /* Vertical Phone View
