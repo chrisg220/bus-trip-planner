@@ -13,7 +13,7 @@ $(document).ready(function() {
     $.each(stops, function() {
       var stop = $(this);
       console.log($(this).data('stop-id'));
-
+      var statusClass;
       var url = "/real_time/fetch.json";
       url += "?stop_id=" + stop.data('stop-id');
       url += "&route=" + stop.data('route-id');
@@ -26,14 +26,17 @@ $(document).ready(function() {
         success: function(data) {
           console.log(data);
 
-
+          stop.removeClass('late').removeClass('early').removeClass('on-time').removeClass('unknown');
           if(data.status) {
+            statusClass = data.status.replace(' ', '-');
             if(data.m) {
               stop.text(Math.abs(data.m) + "m" + data.s + "s " + data.status);
             } else {
               stop.text(data.status);
             }
+            stop.addClass(statusClass);
           } else {
+            stop.addClass('unknown');
             stop.text("??");
           }
 
