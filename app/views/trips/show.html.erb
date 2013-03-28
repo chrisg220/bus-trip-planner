@@ -20,10 +20,11 @@
           <ul id="routes">
           <% @trip.routes.each do |route| %>
             <li>
-              <span class="snapshot"><%= route[:snapshot] %></span>
+              <span class="snapshot">
+                <%= route_icons(route[:snapshot]) %>
+              </span>
               Start time: <%= route[:start_time] if (route[:start_time] > 0) %><br/>
               End time: <%= route[:end_time] if (route[:end_time] > 0) %>
-
               <% json = JSON.parse(route[:response]) %>
               <ul class="steps">
               <% json.each do |step| %>

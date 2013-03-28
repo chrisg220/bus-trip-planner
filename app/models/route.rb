@@ -1,5 +1,5 @@
 class Route < ActiveRecord::Base
-  attr_accessible :duration, :end_time, :response, :snapshot, :start_time, :trip_id, :route_json
+  attr_accessible :duration, :end_time, :response, :snapshot, :start_time, :trip_id, :route_json, :polyline, :map_bounds
   attr_accessor :route_json
   # the following macro may be needed, it is a
   # quick and dirty macro for making variables accessible to self methods
@@ -20,7 +20,11 @@ class Route < ActiveRecord::Base
       leg["steps"].each_with_index do |step, l|
         legs[l] = Hash.new
         legs[l]["travel_mode"]= step["travel_mode"]
-        travel_modes << step["travel_mode"]
+        if step["transit_details"] && step["transit_details"]["line"]["vehicle"]["type"]
+          travel_modes << step["transit_details"]["line"]["vehicle"]["type"]
+        else
+          travel_modes << step["travel_mode"]
+        end
         legs[l]["html_instructions"]  = step["html_instructions"]
         legs[l]["duration"] = step["duration"]["text"]
         #legs[l]["duration_int"] = step["duration"]["value"]
@@ -30,9 +34,11 @@ class Route < ActiveRecord::Base
       end
     end
     #this returns a string
+    self.polyline = self.route_json["polyline"]
+    self.map_bounds = self.route_json["map_bounds"]
     self.response = JSON.generate(legs)
     #JSON.parse returns the data structure exactly
-    self.snapshot = JSON.generate(travel_modes)
+    self.snapshot = travel_modes.join(",")
   end
 
 

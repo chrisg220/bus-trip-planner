@@ -29,6 +29,17 @@ module TripsHelper
     end
   end
 
+  def route_icons(snapshot)
+    modes = snapshot.split(",")
+    html = '<div class="snapshot">'
+    modes.each do |s|
+      html << "<i class=\"icon icon-#{s.downcase}\"></i>"
+      html << "&rarr;"
+    end
+    html << '</div>'
+    html.html_safe
+  end
+
   def route_api_request(origin, destination, time = Time.now, time_by = "departure", options = {})
     config = { :sensor => false, :alternatives => true, :mode => "transit", :force => true }
     config.merge!(options)
