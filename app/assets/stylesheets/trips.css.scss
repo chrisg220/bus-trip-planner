@@ -16,11 +16,11 @@ body.trips.new {
 .container.new {
   h2 { color: $primaryColor1; margin-bottom: 30px; }
   color: #fff;
-  background: rgba(0, 0, 0, .8);
+  background: rgba(0, 0, 0, .7);
   border-radius: 6px;
   radius: 6px;
   padding: 35px 0;
-  margin: 30px 0;
+  margin: 120px 0;
 }
 
 div.show {
@@ -110,10 +110,16 @@ ul#routes {
         }
 
         div.real-time {
+          text-shadow: none;
+          font-size: 9px;
           float:right;
           margin: 13px 0 0 0;
           padding: 4px 7px;
         }
+
+        div.real-time.early {background: red;}
+        div.real-time.unknown {background: #333;}
+        div.real-time.on-time {background: green ;}
 
         span.route-duration {
           display: block;
@@ -124,7 +130,7 @@ ul#routes {
 
   }
 }
-div.snapshot { display: inline-block;}
+div.snapshot { display: inline-block; margin: 9px 0 6px 0;}
 
 .snapshot .icon { height: 27px; width: 27px; background-position: 50% 50%; background-repeat: no-repeat; padding: 0 10px; vertical-align: middle; }
 .snapshot .icon-bus { background-image: url(asset_path('icon-bus.png', image)); }
@@ -132,10 +138,4 @@ div.snapshot { display: inline-block;}
 .snapshot .icon-tram { background-image: url(asset_path('icon-tram.png', image)); }
 .snapshot .icon-car { background-image: url(asset_path('icon-car.png', image)); }
 
-/* Vertical Phone View
-************************************************************************/
-@media screen and (max-width:450px) {
-  #canvas { display: none; visibility: hidden;}
-  div.trips-info-container  { width: 100%; }
-}
 
