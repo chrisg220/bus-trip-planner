@@ -3,3 +3,8 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 #routes ul.steps { display: none; }
+.snapshot .icon { height: 27px; width: 27px; background-position: 50% 50%; background-repeat: no-repeat; }
+.icon-bus { background-image: url(asset_path('icon-bus.png', image)); }
+.icon-walking { background-image: url(asset_path('icon-walk.png', image)); }
+.icon-tram { background-image: url(asset_path('icon-tram.png', image)); }
+.icon-car { background-image: url(asset_path('icon-car.png', image)); }

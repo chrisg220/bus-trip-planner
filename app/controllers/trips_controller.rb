@@ -34,8 +34,8 @@ class TripsController < ApplicationController
   end
 
   def show
-    @resp = route_api_request(@trip.origin_name, @trip.destination_name)
-    if @resp["status"]!= "OK"
+    #@resp = route_api_request(@trip.origin_name, @trip.destination_name)
+    if @resp && @resp["status"] != "OK"
       flash.now[:alert] = "Bad start or end location"
       render 'new'
     else
