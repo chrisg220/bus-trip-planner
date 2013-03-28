@@ -1,6 +1,6 @@
 <div class="container-fluid show">
     <div class="row">
-      <div class="span6">
+      <div class="span5">
         <div class="btn-group">
           <button class="btn">Actions</button>
           <button class="btn dropdown-toggle" data-toggle="dropdown">
@@ -23,8 +23,9 @@
               <span class="snapshot">
                 <%= route_icons(route[:snapshot]) %>
               </span>
-              <span class="end time">Start time: <%= Time.at(route[:start_time]).to_time.strftime('%l:%M%P')  if (route[:start_time] > 0) %>
-              <span class="end time">End time: <%= Time.at(route[:end_time]).to_time.strftime('%l:%M%P') if (route[:end_time] > 0) %><span>
+              <span class="time range">
+                <%= Time.at(route[:start_time]).to_time.strftime('%l:%M%P')  if (route[:start_time] > 0) %> -
+                <%= Time.at(route[:end_time]).to_time.strftime('%l:%M%P') if (route[:end_time] > 0) %><span>
               <% json = JSON.parse(route[:response]) %>
               <ul class="steps">
               <% json.each do |step| %>
@@ -41,8 +42,8 @@
           </ul>
         </div>
       </div>
-      <div class="span6 container-fluid">
-        asdfasd
+      <div class="span7">
+        [Insert Map]
       </div>
     </div>
   </div>

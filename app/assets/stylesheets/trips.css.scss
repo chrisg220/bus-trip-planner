@@ -6,6 +6,33 @@
 
 
 .map-container{ margin-left: 0px;}
+ul {
+  list-style:none;
+  margin: 0;
+
+  li {
+    border: solid 1px black;
+    padding: 5px 10px;
+
+    color: #FFF;
+    text-shadow: -1px 1px 1px rgba(0, 0, 0, .2);
+    background: #e26161;
+    background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJod…EiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+    background: -moz-linear-gradient(top, #e26161 0%, #990000 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#e26161), color-stop(100%,#990000));
+    background: -webkit-linear-gradient(top, #e26161 0%,#990000 100%);
+    background: -o-linear-gradient(top, #e26161 0%,#990000 100%);
+    background: -ms-linear-gradient(top, #e26161 0%,#990000 100%);
+    background: linear-gradient(top, #e26161 0%,#990000 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e26161', endColorstr='#990000',GradientType=0 );
+
+    span.time {
+      display: block;
+      font-size: 12px;
+    }
+  }
+}
+div.snapshot { display: inline-block;}
 
 .snapshot .icon { height: 27px; width: 27px; background-position: 50% 50%; background-repeat: no-repeat; }
 .icon-bus { background-image: url(asset_path('icon-bus.png', image)); }

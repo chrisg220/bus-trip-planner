@@ -22,14 +22,14 @@
         </a>
         <a class="brand" href="/">BusTripPlanner</a>
         <div class="nav-collapse">
-          <ul class="nav">
           <% if user_signed_in? %>
-            <li>Happy travels, <%= current_user.email %></li>
+            <span>Happy travels, <%= current_user.email %></span>
           <% else %>
+          <ul class="nav">
             <li><%= link_to "Sign up", new_user_registration_path %></li>
             <li><%= link_to "Sign in", new_user_session_path %></li>
-          <% end %>
           </ul>
+        <% end %>
         </div>
       </div>
     </div>
