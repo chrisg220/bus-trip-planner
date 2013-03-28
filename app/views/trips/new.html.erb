@@ -1,7 +1,9 @@
-<h2>Create a new trip</h2>
-<p>First, let's find the transit routes you can take to your destination.</p>
-<%= render "form" %>
+<div class="container">
+  <h2>Create a new trip</h2>
+  <p>First, let's find the transit routes you can take to your destination.</p>
+  <%= render "form" %>
 
-<% if @json %>
-<%= @json %>
-<% end %>
+  <% if @json %>
+  <%= @json %>
+  <% end %>
+</div>

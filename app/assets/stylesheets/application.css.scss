@@ -11,5 +11,12 @@
  *= require bootstrap
  *= require_tree .
  */
+$debug : true;
+
+@if $debug == true {
+  div { outline: dashed 1px red; }
+}
 
 body { padding-top: 65px; }
+
+
