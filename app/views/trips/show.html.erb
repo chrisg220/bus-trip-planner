@@ -20,20 +20,29 @@
           <ul id="routes">
           <% @trip.routes.each do |route| %>
             <li>
-              <span class="snapshot">
-                <%= route_icons(route[:snapshot]) %>
-              </span>
-              <span class="time range">
-                <%= Time.at(route[:start_time]).to_time.strftime('%l:%M%P')  if (route[:start_time] > 0) %> -
-                <%= Time.at(route[:end_time]).to_time.strftime('%l:%M%P') if (route[:end_time] > 0) %><span>
+              <div class="route-summary">
+                <span class="snapshot">
+                  <%= route_icons(route[:snapshot]) %>
+                </span>
+                <span class="time range">
+                  <%= Time.at(route[:start_time]).to_time.strftime('%l:%M%P')  if (route[:start_time] > 0) %> -
+                  <%= Time.at(route[:end_time]).to_time.strftime('%l:%M%P') if (route[:end_time] > 0) %>
+                </span>
+              </div>
               <% json = JSON.parse(route[:response]) %>
               <ul class="steps">
               <% json.each do |step| %>
                 <li>
-                  #<%= step["line"] %>
-                  <%= step["html_instructions"] %><br/>
-                  Duration: <%= step["duration"] %>
-                  <%= real_time_container(step) %>
+                  <div>
+                  <div class="rt-info-bucket">
+                    <span>#<%= step["line"] %></span>
+                    <span class="instructions"><%=  step["html_instructions"] %></span>
+                    <span class="route-duration"><%= step["duration"] %><span>
+                  </div>
+                  <div class="rt-timer-bucket">
+                    <%= real_time_container(step) %>
+                  </div>
+                </div>
                 </li>
               <% end %>
               </ul>
