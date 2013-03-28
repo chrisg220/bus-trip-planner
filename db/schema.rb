@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130326195850) do
+ActiveRecord::Schema.define(:version => 20130328011616) do
 
   create_table "routes", :force => true do |t|
     t.integer  "trip_id"
@@ -22,6 +22,8 @@ ActiveRecord::Schema.define(:version => 20130326195850) do
     t.text     "snapshot"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.string   "polyline"
+    t.string   "map_bounds"
   end
 
   add_index "routes", ["trip_id"], :name => "index_routes_on_trip_id"

@@ -1,5 +1,5 @@
 class Route < ActiveRecord::Base
-  attr_accessible :duration, :end_time, :response, :snapshot, :start_time, :trip_id, :route_json
+  attr_accessible :duration, :end_time, :response, :snapshot, :start_time, :trip_id, :route_json, :polyline, :map_bounds
   attr_accessor :route_json
   # the following macro may be needed, it is a
   # quick and dirty macro for making variables accessible to self methods
@@ -34,6 +34,8 @@ class Route < ActiveRecord::Base
       end
     end
     #this returns a string
+    self.polyline = self.route_json["polyline"]
+    self.map_bounds = self.route_json["map_bounds"]
     self.response = JSON.generate(legs)
     #JSON.parse returns the data structure exactly
     self.snapshot = travel_modes.join(",")
