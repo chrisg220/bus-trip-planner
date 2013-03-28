@@ -1,5 +1,5 @@
 <div class="container-fluid show">
-    <div class="row-fluid">
+    <div class="row">
       <div class="span6">
         <div class="btn-group">
           <button class="btn">Actions</button>
@@ -23,8 +23,8 @@
               <span class="snapshot">
                 <%= route_icons(route[:snapshot]) %>
               </span>
-              Start time: <%= route[:start_time] if (route[:start_time] > 0) %><br/>
-              End time: <%= route[:end_time] if (route[:end_time] > 0) %>
+              <span class="end time">Start time: <%= Time.at(route[:start_time]).to_time.strftime('%l:%M%P')  if (route[:start_time] > 0) %>
+              <span class="end time">End time: <%= Time.at(route[:end_time]).to_time.strftime('%l:%M%P') if (route[:end_time] > 0) %><span>
               <% json = JSON.parse(route[:response]) %>
               <ul class="steps">
               <% json.each do |step| %>
@@ -41,7 +41,7 @@
           </ul>
         </div>
       </div>
-      <div class="span6 map-container">
+      <div class="span6 container-fluid">
         asdfasd
       </div>
     </div>
