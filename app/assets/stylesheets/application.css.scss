@@ -30,14 +30,14 @@ $primaryColor1 : #3a87ad;
   .btn-group, .brand  {margin: 0;}
 }
 .navbar-inner {background: $primaryColor1;}
-
+h2 { color: $primaryColor1; margin-bottom: 30px; }
 
 
 /* Application Styles
 ************************************************************************/
 body.bbt { margin-top: 57px;}
 
-.wrapper { margin-top: 57px;}
+.wrapper { margin-top: 57px; }
 
 div.nav-collapse {
   float: right;
@@ -49,7 +49,10 @@ div.nav-collapse {
 .nav.secondary {
   font-size: 12px;
   float:right;
+  color:#fff;
 }
+
+.nav-collapse .nav li a { color:#fff; text-shadow: none;}
 
 img.logo.bbt { width: 300px;}
 h1.logo { visibility: hidden; display: none; text-indent: -9999px;}

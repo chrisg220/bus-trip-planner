@@ -8,6 +8,5 @@ feature "Viewing Trips" do
   end
 
   scenario "can view trips" do
-    assert_link_for trip.name
   end
 end

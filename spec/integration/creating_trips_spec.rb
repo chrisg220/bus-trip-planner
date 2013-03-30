@@ -31,8 +31,8 @@ feature "Creating Trips" do
         page.should have_content "Origin and destination can't be blank"
       end
 
-      # page.should have_content "Starting point can't be blank"
-      # page.should have_content "Ending point can't be blank"
+      page.should have_content "Starting point can't be blank"
+      page.should have_content "Ending point can't be blank"
     end
 
     scenario "fail gracefully if Google can't find a route (no results)" do
@@ -58,13 +58,12 @@ feature "Creating Trips" do
     end
 
     scenario "fail gracefully when location is outside King County" do
-      #
+      assert_
     end
 
     scenario "check that date is not in the past" do
       # http://stackoverflow.com/questions/1836000/how-to-validate-a-models-date-attribute-against-a-specific-range-evaluated-at
     end
-
   end
 
   context "registered users" do
@@ -80,9 +79,9 @@ feature "Creating Trips" do
       fill_in "Ending Point", :with => bus_trip.destination_name
       click_button "Submit"
 
-      # within ".alert" do
-      #   page.should have_content "Trip stored"
-      # end
+      within ".alert" do
+        page.should have_content "Trip stored"
+      end
 
       click_link "Save Trip"
 
